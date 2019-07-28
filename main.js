@@ -7,9 +7,12 @@ var addTaskButton = document.querySelector('.task__add--button');
 var navBar = document.querySelector('.nav');
 var addTaskButton = document.querySelector('.task__add--button');
 var makeListButton = document.querySelector('.top__create--button');
-
-
 var toDos = []
+
+
+
+// checkStorage();
+appendLists();
 
 
 
@@ -21,9 +24,32 @@ makeListButton.addEventListener("click", listHandler);
 
 function listHandler(event) {
 	event.preventDefault();
-	createTaskArray();
 	createList();
-	generateToDoCard();
+	// generateToDoCard(toDo);
+}
+
+function enableCreateList() {
+	if (titleInput.value === "" || taskInput.value === "") {
+		makeListButton.disabled = true;
+	} else {
+		makeListButton.disabled = false;
+	}
+}
+
+// function checkStorage() {
+// 	if (JSON.parse(localStorage.getItem("listKey")) === null) {
+// 		toDos = []
+// 	} else {
+// 		toDos = JSON.parse(localStorage.getItem("listKey")).map(function(element) {
+// 			return new ToDo(element)
+// 		});
+// 	}
+// }
+
+function appendLists() {
+	for (var i = 0; i < toDos.length; i++) {
+		generateToDoCard(toDos[i]);
+	}
 }
 
 
@@ -49,37 +75,41 @@ function deleteFromList(event) {
 
 function createTaskArray() {
 	var taskItems = document.querySelectorAll('.nav__list-item');
-	console.log(taskItems);
 	var taskItemsArray = Array.from(taskItems);
-	console.log(taskItemsArray)
-	taskItemsArray.map(function(task) {
+	var taskText = taskItemsArray.map(function(task) {
 		return task.innerText;
 	});
-	console.log(taskItemsArray);
-	var taskObjs = taskItemsArray.map(function(task){
-		return {task: `${task}`, complete: false, id: Date.now()}
+	var taskObjs = taskText.map(function(task){
+		return {task: `${task}`, complete: false}
 	});
 	return taskObjs;
 }
 
-function createList() {
+function createList(taskObjs) {
+	var taskObjs = createTaskArray();
 	var toDo = new ToDoList ({
 		title: titleInput.value, 
 		tasks: taskObjs,
 		id: Date.now()
 	});
 	toDos.push(toDo);
+	toDo.saveToStorage(toDos);
 	generateToDoCard(toDo);
+	titleInput.value = "";
+	taskInput.value = "";
 }
 
 function generateToDoCard(toDo) {
+	console.log(toDo);
 	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card" data-id=${toDo.id}>
 				<header class="card__header">
 					<h3 class="card__title">${toDo.title}</h3>
 				</header>
 			<section class="card__main">
 				<ul>
-					${tasks}
+					${toDo.tasks.map(function(task){
+						return `<li>${task.task}</li>`
+					}).join("")}
 				</ul>
 			</section>
 			<footer class="card__footer">

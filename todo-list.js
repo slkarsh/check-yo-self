@@ -24,4 +24,9 @@ class ToDoList {
 	updateTask () {
 
 	}
+
+	createTasks() {
+
+	}
 }
+
