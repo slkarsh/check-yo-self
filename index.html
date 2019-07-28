@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>Check Yo'Self</title>
+	<link rel="stylesheet" href="styles.css" type="text/css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,800&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header class="header">
+		<h1 class="header__title">Check <span class="header__span">Yo'</span> Self</h1>
+		<form class="header__form">
+			<img src="images/search.svg" class="header__form--searchimg" alt="search-image">
+			<input type="text" class="header__search--input" placeholder="Search">
+		</form>
+	</header>
+	<main class="main__content">
+		<nav class="nav">
+			<form class="nav__form">
+				<section class="nav__title-input">
+					<label class="title__label">Task Title</label>
+					<input type="text" class="title__input" placeholder="A New ToDo Title">
+				</section>
+				<section class="nav__container--tasklist">
+					<ul class="nav__tasklist">
+					</ul>
+				</section>
+				<section class="nav__task-input">
+					<label class="task__label">Task Item</label>
+					<img src="images/plus.svg" class="task__add--button" alt="Click to add new task">
+					<input type="text" class="task__input" placeholder="A New Task">
+				</section>
+				<section class="nav__buttons">
+					<button class="top__create--button">Make a Task List</button>
+					<button class="top__clear--button">Clear All</button>
+				</section>
+			</form>
+		<section class="nav__bottom">
+			<button class="bottom__filter--button">Filter by Urgency</button>
+		</section>
+	</nav>
+		<section class="main__section">
+			<article class="card" data-id=${obj.id}>
+				<header class="card__header">
+					<h3 class="card__title">${obj.title}</h3>
+				</header>
+			<section class="card__main">
+				<ul>
+					<li>Task 1</li>
+					<li>Task 2</li>
+				</ul>
+			</section>
+			<footer class="card__footer">
+				<img src="images/urgent.svg" class="card__img--urgent" alt="urgent lightning bolt">
+				<img src="images/delete.svg" class="card__img--delete" alt="delete icon">
+			</footer>
+		</article>
+	</section>
+	</main>
+</body>
+<script src="todo-list.js"></script>
+<script src="main.js"></script>
+</html>
