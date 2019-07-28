@@ -7,11 +7,12 @@ var addTaskButton = document.querySelector('.task__add--button');
 var navBar = document.querySelector('.nav');
 var addTaskButton = document.querySelector('.task__add--button');
 var makeListButton = document.querySelector('.top__create--button');
+var clearButton = document.querySelector('.top__clear--button');
 var toDos = []
 
 
 
-// checkStorage();
+checkStorage();
 appendLists();
 
 
@@ -19,13 +20,52 @@ appendLists();
 addTaskButton.addEventListener("click", createTask);
 navBar.addEventListener("click", deleteFromList);
 makeListButton.addEventListener("click", listHandler);
+mainDisplay.addEventListener("click", cardHandler);
+
 
 
 
 function listHandler(event) {
 	event.preventDefault();
+	enableCreateList();
 	createList();
-	// generateToDoCard(toDo);
+	clearNavBar();
+
+}
+
+function cardHandler(event) {
+	findId(event);
+	findIndex(event);
+
+}
+
+function findId(event) {
+	var toDo = event.target.closest('.card');
+	var toDoId = parseInt(toDo.dataset.id);
+	console.log(toDoId)
+	return toDoId;
+}
+
+function findIndex(event) {
+	var list = event.target.closest('.card');
+	var listId = parseInt(list.dataset.id);
+	var listIndex = toDos.findIndex(function(toDo) {
+		return toDo.id === listId;
+	})
+	console.log(listIndex)
+	return listIndex;
+}
+
+
+function checkOffTask(event) {
+	findId(event);
+	findIndex(event);
+	var checkBox = event.target;
+	console.log(checkBox)
+	if(event.target.innerHTML.includes('.main--checkbox-empty')){
+		checkBox.setAttrbute("src", "images/checkbox-active.svg")
+		checkBox.addClassList('main--checkbox-checked')
+	}
 }
 
 function enableCreateList() {
@@ -36,22 +76,29 @@ function enableCreateList() {
 	}
 }
 
-// function checkStorage() {
-// 	if (JSON.parse(localStorage.getItem("listKey")) === null) {
-// 		toDos = []
-// 	} else {
-// 		toDos = JSON.parse(localStorage.getItem("listKey")).map(function(element) {
-// 			return new ToDo(element)
-// 		});
-// 	}
-// }
+function checkStorage() {
+	if (JSON.parse(localStorage.getItem("listKey")) === null) {
+		toDos = []
+	} else {
+		toDos = JSON.parse(localStorage.getItem("listKey")).map(function(element) {
+			return new ToDoList(element)
+		});
+	}
+}
 
 function appendLists() {
 	for (var i = 0; i < toDos.length; i++) {
+		console.log(toDos);
 		generateToDoCard(toDos[i]);
 	}
 }
 
+function clearNavBar() {
+	var listItems = Array.from(document.querySelector('.nav__tasklist').childNodes);
+	listItems.forEach(item => {
+		item.remove()
+	})
+}
 
 
 
@@ -80,7 +127,7 @@ function createTaskArray() {
 		return task.innerText;
 	});
 	var taskObjs = taskText.map(function(task){
-		return {task: `${task}`, complete: false}
+		return {task: `${task}`, complete: false, id: Date.now()}
 	});
 	return taskObjs;
 }
@@ -108,7 +155,7 @@ function generateToDoCard(toDo) {
 			<section class="card__main">
 				<ul>
 					${toDo.tasks.map(function(task){
-						return `<li>${task.task}</li>`
+						return `<li><img src="images/checkbox.svg" class="main--checkbox-empty">${task.task}</li>`
 					}).join("")}
 				</ul>
 			</section>

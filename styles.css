@@ -195,6 +195,11 @@ body {
 
 }
 
+.main--checkbox-empty {
+	height: 20px;
+	width: 20px;
+}
+
 .card__footer {
 	border-top: 1px solid #C7D3D8;
 	width: 100%
