@@ -70,39 +70,44 @@ function checkOffTask(event){
 }
 
 function findTaskIndex(event) {
-	if (event.target.src = 'images/checkbox-active.svg') {
+		// checkOffTask(event);
+	// if (event.target.src = 'images/checkbox-active.svg') {
 		var listIndex = getIndex(event);
 		var listedTask = event.target.closest('.card__list-item').innerText
 		var tasksList = toDos[listIndex].tasks;
 		var taskIndex = tasksList.findIndex(task => task.task === listedTask)
 		taskIndex = parseInt(taskIndex);
-	}
+	// }
 	return taskIndex;
 }
 
 
+// function markTaskComplete(event) {
+// 	var listIndex = getIndex(event);
+// 	var taskIndex = findTaskIndex(event);
+// 	checkOffTask(event);
+// 	toDos[listIndex].tasks[taskIndex].complete != toDos[listIndex].tasks[taskIndex].complete;
+// 	var checkImg = event.target;
+// 	var unchecked = 'images/checkbox.svg';
+// 	var checked = 'images/checkbox-active.svg'
+// 	toDos[listIndex].tasks[taskIndex].complete === false ? checkImg.src = unchecked : checkImg.src = checked
+// 	toDos[listIndex].saveToStorage(toDos);
+
+// }
+
 function markTaskComplete(event) {
+	checkOffTask(event);
 	var listIndex = getIndex(event);
 	var taskIndex = findTaskIndex(event);
-	checkOffTask(event);
-	toDos[listIndex].tasks[taskIndex].complete != toDos[listIndex].tasks[taskIndex].complete;
+	toDos[listIndex].tasks[taskIndex].complete = true;
 	var checkImg = event.target;
 	var unchecked = 'images/checkbox.svg';
 	var checked = 'images/checkbox-active.svg'
-	toDos[listIndex].tasks[taskIndex].complete === false ? checkImg.src = unchecked : checkImg.src = checked
+	toDos[listIndex].tasks[taskIndex].complete === true ? checkImg.src = checked : checkImg.src = unchecked;
+	// var updatedTask = toDos[listIndex].tasks[taskIndex]
 	toDos[listIndex].saveToStorage(toDos);
-
+	// updateTask(listIndex, toDos);
 }
-
-// function markTaskComplete(event) {
-// 	checkOffTask(event);
-// 	var listIndex = getIndex(event);
-// 	var taskIndex = findTaskIndex(event);
-// 	toDos[listIndex].tasks[taskIndex].complete = true;
-// 	// var updatedTask = toDos[listIndex].tasks[taskIndex]
-// 	toDos[listIndex].saveToStorage(toDos);
-// 	// updateTask(listIndex, toDos);
-// }
 
 function updateUrgent(event) {
 	var index = getIndex(event);
@@ -134,7 +139,6 @@ function checkStorage() {
 
 function appendLists() {
 	for (var i = 0; i < toDos.length; i++) {
-		console.log(toDos);
 		generateToDoCard(toDos[i]);
 	}
 }
