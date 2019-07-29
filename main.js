@@ -37,10 +37,12 @@ function cardHandler(event) {
 	// console.log("click clack")
 	if (event.target.classList[0] === 'main--checkbox-empty'){
 		console.log("moo")
-		checkOffTask(event);
+		// checkOffTask(event);
 		findTaskIndex(event);
 		markTaskComplete(event);
-
+	}
+	if (event.target.classList[0] === 'card__img--urgent'){
+		updateUrgent(event);
 	}
 }
 
@@ -60,6 +62,7 @@ function getIndex(event) {
 	return listIndex;
 }
 
+
 function checkOffTask(event){
 	if (event.target.src = 'imgages/checkbox.svg'){
 		event.target.src = 'images/checkbox-active.svg';
@@ -77,21 +80,39 @@ function findTaskIndex(event) {
 	return taskIndex;
 }
 
+
 function markTaskComplete(event) {
-	checkOffTask(event);
 	var listIndex = getIndex(event);
 	var taskIndex = findTaskIndex(event);
-	toDos[listIndex].tasks[taskIndex].complete = true;
-	// var updatedTask = toDos[listIndex].tasks[taskIndex]
+	checkOffTask(event);
+	toDos[listIndex].tasks[taskIndex].complete != toDos[listIndex].tasks[taskIndex].complete;
+	var checkImg = event.target;
+	var unchecked = 'images/checkbox.svg';
+	var checked = 'images/checkbox-active.svg'
+	toDos[listIndex].tasks[taskIndex].complete === false ? checkImg.src = unchecked : checkImg.src = checked
 	toDos[listIndex].saveToStorage(toDos);
-	// updateTask(listIndex, toDos);
+
 }
 
-// function markUrgent(event) {
-// 	if (event.target.src = 'images/urgent.svg'){
-// 		console.log("woof")
-// 		event.target.src = 'images/urgent-active.svg';
+// function markTaskComplete(event) {
+// 	checkOffTask(event);
+// 	var listIndex = getIndex(event);
+// 	var taskIndex = findTaskIndex(event);
+// 	toDos[listIndex].tasks[taskIndex].complete = true;
+// 	// var updatedTask = toDos[listIndex].tasks[taskIndex]
+// 	toDos[listIndex].saveToStorage(toDos);
+// 	// updateTask(listIndex, toDos);
 // }
+
+function updateUrgent(event) {
+	var index = getIndex(event);
+	toDos[index].urgent = !toDos[index].urgent;
+	var urgentImg = event.target;
+	var notUrgent = 'images/urgent.svg';
+	var urgent = 'images/urgent-active.svg';
+	toDos[index].urgent === false ? urgentImg.src = notUrgent : urgentImg.src = urgent
+	toDos[index].saveToStorage(toDos);
+}
 
 function enableCreateList() {
 	if (titleInput.value === "" || taskInput.value === "") {
@@ -172,7 +193,7 @@ function createList(taskObjs) {
 }
 
 function generateToDoCard(toDo) {
-	console.log(toDo);
+	// console.log(toDo);
 	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card" data-id=${toDo.id}>
 				<header class="card__header">
 					<h3 class="card__title">${toDo.title}</h3>
@@ -180,12 +201,12 @@ function generateToDoCard(toDo) {
 			<section class="card__main">
 				<ul>
 					${toDo.tasks.map(function(task){
-						return `<li class="card__list-item"><img src="images/checkbox.svg" class="main--checkbox-empty">${task.task}</li>`
+						return `<li class="card__list-item"><img src=${task.complete ? 'images/checkbox-active.svg' : 'images/checkbox.svg'} class="main--checkbox-empty">${task.task}</li>`
 					}).join("")}
 				</ul>
 			</section>
 			<footer class="card__footer">
-				<img src="images/urgent.svg" class="card__img--urgent" alt="urgent lightning bolt">
+				<img src=${toDo.urgent ? 'images/urgent-active.svg' : 'images/urgent.svg'} class="card__img--urgent" alt="urgent lightning bolt">
 				<img src="images/delete.svg" class="card__img--delete" alt="delete icon">
 			</footer>
 		</article>`)
