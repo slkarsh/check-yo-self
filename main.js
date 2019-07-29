@@ -27,16 +27,20 @@ mainDisplay.addEventListener("click", cardHandler);
 
 function listHandler(event) {
 	event.preventDefault();
-	enableCreateList();
-	createList();
-	clearNavBar();
+	enableCreateList(event);
+	createList(event);
+	clearNavBar(event);
 
 }
 
 function cardHandler(event) {
-	findId(event);
-	findIndex(event);
-
+	console.log("click clack")
+	// findId(event);
+	// findIndex(event);
+	if (event.target.classList[0] === 'main--checkbox-empty'){
+		console.log("moo")
+		checkOffTask(event);
+	}
 }
 
 function findId(event) {
@@ -56,17 +60,25 @@ function findIndex(event) {
 	return listIndex;
 }
 
-
-function checkOffTask(event) {
-	findId(event);
-	findIndex(event);
-	var checkBox = event.target;
-	console.log(checkBox)
-	if(event.target.innerHTML.includes('.main--checkbox-empty')){
-		checkBox.setAttrbute("src", "images/checkbox-active.svg")
-		checkBox.addClassList('main--checkbox-checked')
+function checkOffTask(event){
+	if (event.target.src = 'imgages/checkbox.svg'){
+		console.log("click")
+		event.target.src = 'images/checkbox-active.svg';
 	}
 }
+
+
+// function checkOffTask(event) {
+// 	findId(event);
+// 	findIndex(event);
+// 	// var checkBox = event.target;
+// 	// console.log(checkBox)
+// 	if(event.target.classList.includes('.main--checkbox-empty')){
+// 		console.log("made it here")
+// 		checkBox.setAttrbute("src", "images/checkbox-active.svg")
+// 		checkBox.addClassList('main--checkbox-checked')
+// 	}
+// }
 
 function enableCreateList() {
 	if (titleInput.value === "" || taskInput.value === "") {
