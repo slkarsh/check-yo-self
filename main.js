@@ -40,6 +40,8 @@ function cardHandler(event) {
 	if (event.target.classList[0] === 'main--checkbox-empty'){
 		console.log("moo")
 		checkOffTask(event);
+		findTaskIndex(event);
+
 	}
 }
 
@@ -56,7 +58,6 @@ function findIndex(event) {
 	var listIndex = toDos.findIndex(function(toDo) {
 		return toDo.id === listId;
 	})
-	console.log(listIndex)
 	return listIndex;
 }
 
@@ -67,6 +68,27 @@ function checkOffTask(event){
 	}
 }
 
+function findTaskIndex(event) {
+	if (event.target.src = 'images/checkbox-active.svg') {
+		var listIndex = findIndex(event);
+		console.log(listIndex);
+		var listedTask = event.target.closest('.card__list-item').innerText
+		console.log(listedTask)
+		// console.log(toDos[listIndex].tasks)
+		var tasksList = toDos[listIndex].tasks;
+		console.log(tasksList)
+		var taskIndex = tasksList.findIndex(task => task.task === listedTask)
+
+		// var taskIndex = tasksList.map(function(task){
+			// return task.task.findIndex(listedTask)
+		// })
+		// var taskIndex = tasksList.indexOf(listedTask)
+		console.log(taskIndex)
+		// var taskIndex = parseInt(listedTask.dataset.index)
+	}
+	console.log(taskIndex);
+	return taskIndex;
+}
 
 // function checkOffTask(event) {
 // 	findId(event);
@@ -167,7 +189,7 @@ function generateToDoCard(toDo) {
 			<section class="card__main">
 				<ul>
 					${toDo.tasks.map(function(task){
-						return `<li><img src="images/checkbox.svg" class="main--checkbox-empty">${task.task}</li>`
+						return `<li class="card__list-item"><img src="images/checkbox.svg" class="main--checkbox-empty">${task.task}</li>`
 					}).join("")}
 				</ul>
 			</section>
