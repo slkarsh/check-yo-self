@@ -34,13 +34,12 @@ function listHandler(event) {
 }
 
 function cardHandler(event) {
-	console.log("click clack")
-	// findId(event);
-	// findIndex(event);
+	// console.log("click clack")
 	if (event.target.classList[0] === 'main--checkbox-empty'){
 		console.log("moo")
 		checkOffTask(event);
 		findTaskIndex(event);
+		markTaskComplete(event);
 
 	}
 }
@@ -52,7 +51,7 @@ function findId(event) {
 	return toDoId;
 }
 
-function findIndex(event) {
+function getIndex(event) {
 	var list = event.target.closest('.card');
 	var listId = parseInt(list.dataset.id);
 	var listIndex = toDos.findIndex(function(toDo) {
@@ -63,43 +62,35 @@ function findIndex(event) {
 
 function checkOffTask(event){
 	if (event.target.src = 'imgages/checkbox.svg'){
-		console.log("click")
 		event.target.src = 'images/checkbox-active.svg';
 	}
 }
 
 function findTaskIndex(event) {
 	if (event.target.src = 'images/checkbox-active.svg') {
-		var listIndex = findIndex(event);
-		console.log(listIndex);
+		var listIndex = getIndex(event);
 		var listedTask = event.target.closest('.card__list-item').innerText
-		console.log(listedTask)
-		// console.log(toDos[listIndex].tasks)
 		var tasksList = toDos[listIndex].tasks;
-		console.log(tasksList)
 		var taskIndex = tasksList.findIndex(task => task.task === listedTask)
-
-		// var taskIndex = tasksList.map(function(task){
-			// return task.task.findIndex(listedTask)
-		// })
-		// var taskIndex = tasksList.indexOf(listedTask)
-		console.log(taskIndex)
-		// var taskIndex = parseInt(listedTask.dataset.index)
+		taskIndex = parseInt(taskIndex);
 	}
-	console.log(taskIndex);
 	return taskIndex;
 }
 
-// function checkOffTask(event) {
-// 	findId(event);
-// 	findIndex(event);
-// 	// var checkBox = event.target;
-// 	// console.log(checkBox)
-// 	if(event.target.classList.includes('.main--checkbox-empty')){
-// 		console.log("made it here")
-// 		checkBox.setAttrbute("src", "images/checkbox-active.svg")
-// 		checkBox.addClassList('main--checkbox-checked')
-// 	}
+function markTaskComplete(event) {
+	checkOffTask(event);
+	var listIndex = getIndex(event);
+	var taskIndex = findTaskIndex(event);
+	toDos[listIndex].tasks[taskIndex].complete = true;
+	// var updatedTask = toDos[listIndex].tasks[taskIndex]
+	toDos[listIndex].saveToStorage(toDos);
+	// updateTask(listIndex, toDos);
+}
+
+// function markUrgent(event) {
+// 	if (event.target.src = 'images/urgent.svg'){
+// 		console.log("woof")
+// 		event.target.src = 'images/urgent-active.svg';
 // }
 
 function enableCreateList() {

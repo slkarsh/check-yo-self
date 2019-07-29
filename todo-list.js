@@ -8,8 +8,8 @@ class ToDoList {
 	}
 
 
-	saveToStorage(todos) {
-		localStorage.setItem("listKey", JSON.stringify(todos));
+	saveToStorage(toDos) {
+		localStorage.setItem("listKey", JSON.stringify(toDos));
 
 	}
 
@@ -17,16 +17,16 @@ class ToDoList {
 
 	}
 
-	updateToDo () {
+	updateToDo() {
+
 
 	}
 
-	updateTask () {
+	updateTask(listIndex,taskIndex) {
+		
 
 	}
 
-	createTasks() {
-
-	}
+	
 }
 
