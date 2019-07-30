@@ -8,33 +8,39 @@ var navBar = document.querySelector('.nav');
 var addTaskButton = document.querySelector('.task__add--button');
 var makeListButton = document.querySelector('.top__create--button');
 var clearButton = document.querySelector('.top__clear--button');
+var buttonContainer = document.querySelector('.nav__buttons');
 var toDos = []
 
 
 
 checkStorage();
 appendLists();
+// enableCreateList();
 
 
 
 addTaskButton.addEventListener("click", createTask);
 navBar.addEventListener("click", deleteFromList);
 makeListButton.addEventListener("click", listHandler);
+buttonContainer.addEventListener("mouseover", enableCreateList)
+// taskInput.addEventListener("keyup", enableCreateList)
+// titleInput.addEventListener("keyup", enableCreateList)
 mainDisplay.addEventListener("click", cardHandler);
+// makeListButton.addEventListener("mouseover", enableCreateList)
 
 
 
 
 function listHandler(event) {
 	event.preventDefault();
-	enableCreateList(event);
+	// enableCreateList();
 	createList(event);
 	clearNavBar(event);
+	disableButton();
 
 }
 
 function cardHandler(event) {
-	// console.log("click clack")
 	if (event.target.classList[0] === 'main--checkbox-empty'){
 		console.log("moo")
 		// checkOffTask(event);
@@ -62,38 +68,14 @@ function getIndex(event) {
 	return listIndex;
 }
 
-
-// function checkOffTask(event){
-// 	if (event.target.src = 'imgages/checkbox.svg'){
-// 		event.target.src = 'images/checkbox-active.svg';
-// 	}
-// }
-
 function findTaskIndex(event) {
-		// checkOffTask(event);
-	// if (event.target.src = 'images/checkbox-active.svg') {
 		var listIndex = getIndex(event);
 		var listedTask = event.target.closest('.card__list-item').innerText
 		var tasksList = toDos[listIndex].tasks;
 		var taskIndex = tasksList.findIndex(task => task.task === listedTask)
 		taskIndex = parseInt(taskIndex);
-	// }
 	return taskIndex;
 }
-
-
-// function markTaskComplete(event) {
-// 	var listIndex = getIndex(event);
-// 	var taskIndex = findTaskIndex(event);
-// 	checkOffTask(event);
-// 	toDos[listIndex].tasks[taskIndex].complete != toDos[listIndex].tasks[taskIndex].complete;
-// 	var checkImg = event.target;
-// 	var unchecked = 'images/checkbox.svg';
-// 	var checked = 'images/checkbox-active.svg'
-// 	toDos[listIndex].tasks[taskIndex].complete === false ? checkImg.src = unchecked : checkImg.src = checked
-// 	toDos[listIndex].saveToStorage(toDos);
-
-// }
 
 function markTaskComplete(event) {
 	var listIndex = getIndex(event);
@@ -104,9 +86,7 @@ function markTaskComplete(event) {
 	var unchecked = 'images/checkbox.svg';
 	var checked = 'images/checkbox-active.svg'
 	toDos[listIndex].tasks[taskIndex].complete === true ? checkImg.src = checked : checkImg.src = unchecked;
-	// var updatedTask = toDos[listIndex].tasks[taskIndex]
 	toDos[listIndex].saveToStorage(toDos);
-	// updateTask(listIndex, toDos);
 }
 
 function updateUrgent(event) {
@@ -120,12 +100,19 @@ function updateUrgent(event) {
 }
 
 function enableCreateList() {
-	if (titleInput.value === "" || taskInput.value === "") {
-		makeListButton.disabled = true;
+	var listAreaItem = document.querySelector('.nav__tasklist').firstChild;
+	var listAreaItemText = listAreaItem ? listAreaItem.textContent : "";
+	if (titleInput.value !== "" && listAreaItemText !== "") {
+		makeListButton.removeAttribute('disabled');
 	} else {
-		makeListButton.disabled = false;
+		makeListButton.setAttribute('disabled', null);
 	}
 }
+
+function disableButton() {
+	makeListButton.setAttribute('disabled', null);
+}
+
 
 function checkStorage() {
 	if (JSON.parse(localStorage.getItem("listKey")) === null) {
@@ -183,6 +170,7 @@ function createTaskArray() {
 }
 
 function createList(taskObjs) {
+	// enableCreateList();
 	var taskObjs = createTaskArray();
 	var toDo = new ToDoList ({
 		title: titleInput.value, 
@@ -197,7 +185,7 @@ function createList(taskObjs) {
 }
 
 function generateToDoCard(toDo) {
-	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card" data-id=${toDo.id}>
+	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card masonry-item" data-id=${toDo.id}>
 				<header class="card__header">
 					<h3 class="card__title">${toDo.title}</h3>
 				</header>
@@ -210,7 +198,9 @@ function generateToDoCard(toDo) {
 			</section>
 			<footer class="card__footer">
 				<img src=${toDo.urgent ? 'images/urgent-active.svg' : 'images/urgent.svg'} class="card__img--urgent" alt="urgent lightning bolt">
+				<figcaption class="urgent__tag">Urgent</figcaption>
 				<img src="images/delete.svg" class="card__img--delete" alt="delete icon">
+				<p class="delete__tag">Delete</p>
 			</footer>
 		</article>`)
 

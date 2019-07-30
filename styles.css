@@ -14,8 +14,9 @@ body {
 
 .main__content {
 	background-color: #F3F6F7;
+	/*columns: 2 250px;*/
 	width: 100%;
-	/*display: inline-block;*/
+	display: inline-block;
 	display: flex;
 	flex-wrap: wrap;
 	height: 100vh;
@@ -140,14 +141,14 @@ body {
 
 }
 
-.task__add--btn {
+/*.task__add--btn {
 	height: 70px;
 	width: 70px;
 	font-size: 15em;
 	background-color: #1F1F3D;
 	color: white;
 }
-
+*/
 .nav__tasklist {
 	display: flex;
     flex-direction: column;
@@ -187,10 +188,10 @@ body {
 }
 
 
-.main__section {
+/*.main__section {
 	column-width: 18em;
 }
-
+*/
 .card {
 	display: inline-block;
 	background-color: #FAFDDF;
@@ -199,13 +200,10 @@ body {
 	margin: 0.25rem;
 	padding: 1rem;
 	width: 100%;
-
 }
 
 .card__header {
 	border-bottom: 1px solid #C7D3D8;
-
-
 }
 
 .card__title {
