@@ -63,11 +63,11 @@ function getIndex(event) {
 }
 
 
-function checkOffTask(event){
-	if (event.target.src = 'imgages/checkbox.svg'){
-		event.target.src = 'images/checkbox-active.svg';
-	}
-}
+// function checkOffTask(event){
+// 	if (event.target.src = 'imgages/checkbox.svg'){
+// 		event.target.src = 'images/checkbox-active.svg';
+// 	}
+// }
 
 function findTaskIndex(event) {
 		// checkOffTask(event);
@@ -96,10 +96,10 @@ function findTaskIndex(event) {
 // }
 
 function markTaskComplete(event) {
-	checkOffTask(event);
 	var listIndex = getIndex(event);
 	var taskIndex = findTaskIndex(event);
-	toDos[listIndex].tasks[taskIndex].complete = true;
+	var card = toDos[listIndex]
+	card.markComplete(card.tasks[taskIndex])
 	var checkImg = event.target;
 	var unchecked = 'images/checkbox.svg';
 	var checked = 'images/checkbox-active.svg'
@@ -197,7 +197,6 @@ function createList(taskObjs) {
 }
 
 function generateToDoCard(toDo) {
-	// console.log(toDo);
 	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card" data-id=${toDo.id}>
 				<header class="card__header">
 					<h3 class="card__title">${toDo.title}</h3>

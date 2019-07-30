@@ -51,6 +51,10 @@ body {
 
 }
 
+.li__text {
+	display: inline;
+}
+
 .header__form {
 	float: right;
     height: 40px;
@@ -99,9 +103,9 @@ body {
     padding: 5px;
 }
 
-.title__input,
-.task__input {
+.title__input {
 	display: flex;
+	font-size: 1em;
     flex-direction: column;
     height: 70px;
     width: 83%;
@@ -110,17 +114,38 @@ body {
     align-content: center;
 }
 
+.task__input {
+	font-size: 1em;
+	display: flex;
+    flex-direction: column;
+    height: 70px;
+    width: 84%;
+    align-items: center;
+    margin: 10px auto;
+}
+
 .task__add--button {
-	height: 70px;
-    width: 70px;
+    height: 70px;
+    width: 64px;
     background-color: #1F1F3D;
     float: right;
-    margin-right: 24px;
-    position: relative;
-    margin-top: 38px;
+    margin: 10px auto;
+    display: inline-block;
     vertical-align: middle;
     align-items: right;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    margin-top: -80px;
+    padding: 8px;
 
+}
+
+.task__add--btn {
+	height: 70px;
+	width: 70px;
+	font-size: 15em;
+	background-color: #1F1F3D;
+	color: white;
 }
 
 .nav__tasklist {

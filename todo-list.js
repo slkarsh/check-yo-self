@@ -22,8 +22,12 @@ class ToDoList {
 
 	}
 
-	updateTask(listIndex,taskIndex) {
-		
+	updateTask() {
+
+	}
+
+	markComplete(task) {
+		task.complete = !task.complete;
 
 	}
 
