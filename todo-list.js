@@ -13,23 +13,26 @@ class ToDoList {
 
 	}
 
-	deleteFromStorage() {
+	deleteFromStorage(listIndex, toDos) {
+		toDos.splice(listIndex, 1);
+		this.saveToStorage(toDos);	
 
 	}
 
-	updateToDo() {
+	updateToDo(index) {
+		toDos[index].urgent = !toDos[index].urgent;
 
 
 	}
 
-	updateTask() {
-
-	}
-
-	markComplete(task) {
+	updateTask(task) {
 		task.complete = !task.complete;
-
 	}
+
+	// markComplete(task) {
+	// 	task.complete = !task.complete;
+
+	// }
 
 	
 }

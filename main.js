@@ -15,23 +15,17 @@ var toDos = []
 
 checkStorage();
 appendLists();
-// enableCreateList();
-
-
 
 addTaskButton.addEventListener("click", createTask);
 navBar.addEventListener("click", deleteFromList);
 makeListButton.addEventListener("click", listHandler);
 buttonContainer.addEventListener("mouseover", enableCreateList)
 mainDisplay.addEventListener("click", cardHandler);
-
-
-
+searchInput.addEventListener("keyup", searchCardTitles);
 
 
 function listHandler(event) {
 	event.preventDefault();
-	// enableCreateList();
 	createList(event);
 	clearNavBar(event);
 	disableButton();
@@ -41,12 +35,14 @@ function listHandler(event) {
 function cardHandler(event) {
 	if (event.target.classList[0] === 'main--checkbox-empty'){
 		console.log("moo")
-		// checkOffTask(event);
 		findTaskIndex(event);
 		markTaskComplete(event);
 	}
 	if (event.target.classList[0] === 'card__img--urgent'){
 		updateUrgent(event);
+	}
+	if (event.target.classList[0] === 'card__img--delete') {
+		deleteFromDom(event);
 	}
 }
 
@@ -79,20 +75,18 @@ function markTaskComplete(event) {
 	var listIndex = getIndex(event);
 	var taskIndex = findTaskIndex(event);
 	var card = toDos[listIndex]
-	console.log(card)
-	console.log(card.tasks)
-	console.log(taskIndex)
-	card.markComplete(card.tasks[taskIndex])
+	card.updateTask(card.tasks[taskIndex])
 	var checkImg = event.target;
 	var unchecked = 'images/checkbox.svg';
 	var checked = 'images/checkbox-active.svg'
 	toDos[listIndex].tasks[taskIndex].complete === true ? checkImg.src = checked : checkImg.src = unchecked;
+	toDos[listIndex].tasks[taskIndex].complete === true ? checkImg.className = 'main--checkbox-complete' : checkImg.className = 'main--checkbox-empty';
 	toDos[listIndex].saveToStorage(toDos);
 }
 
 function updateUrgent(event) {
 	var index = getIndex(event);
-	toDos[index].urgent = !toDos[index].urgent;
+	toDos.updateToDo(toDos[index]);
 	var urgentImg = event.target;
 	var notUrgent = 'images/urgent.svg';
 	var urgent = 'images/urgent-active.svg';
@@ -114,6 +108,29 @@ function disableButton() {
 	makeListButton.setAttribute('disabled', null);
 }
 
+function deleteFromDom(event) {
+	var card = event.target.closest('.card');
+	var listIndex = getIndex(event);
+	var emptyCheckBoxes = card.querySelectorAll('.main--checkbox-empty').length;
+	if (emptyCheckBoxes === 0) {
+		card.remove();
+		toDos[listIndex].deleteFromStorage(listIndex, toDos)
+	}
+}
+
+function searchCardTitles() {
+  var searchInput = document.querySelector('.header__search--input').value;
+  searchInput = searchInput.toLowerCase();
+  var cardContent = document.querySelectorAll(".card__title");
+  var card = document.querySelectorAll(".card");
+  for (var i = 0; i < cardContent.length; i++) {
+    if (!cardContent[i].innerText.toLowerCase().includes(searchInput)) {
+      card[i].classList.add('hidden');
+    } else if (searchInput.length === 0) {
+      card[i].classList.remove('hidden');
+    }
+  }
+}
 
 function checkStorage() {
 	if (JSON.parse(localStorage.getItem("listKey")) === null) {
@@ -137,8 +154,6 @@ function clearNavBar() {
 		item.remove()
 	})
 }
-
-
 
 function createTask(event) {
 		if (taskInput.value !== "") {
@@ -171,7 +186,6 @@ function createTaskArray() {
 }
 
 function createList(taskObjs) {
-	// enableCreateList();
 	var taskObjs = createTaskArray();
 	var toDo = new ToDoList ({
 		title: titleInput.value, 
@@ -193,15 +207,21 @@ function generateToDoCard(toDo) {
 			<section class="card__main">
 				<ul>
 					${toDo.tasks.map(function(task){
-						return `<li class="card__list-item"><img src=${task.complete ? 'images/checkbox-active.svg' : 'images/checkbox.svg'} class="main--checkbox-empty">${task.task}</li>`
+						var imagePath = task.complete ? 'images/checkbox-active.svg' : 'images/checkbox.svg'
+						var imageClass = task.complete ? 'main--checkbox-complete' : 'main--checkbox-empty'
+						return `<li class="card__list-item"><img src=${imagePath} class=${imageClass}>${task.task}</li>`
 					}).join("")}
 				</ul>
 			</section>
 			<footer class="card__footer">
-				<img src=${toDo.urgent ? 'images/urgent-active.svg' : 'images/urgent.svg'} class="card__img--urgent" alt="urgent lightning bolt">
-				<figcaption class="urgent__tag">Urgent</figcaption>
-				<img src="images/delete.svg" class="card__img--delete" alt="delete icon">
-				<p class="delete__tag">Delete</p>
+				<div class= "card__footer-urgentimg">
+					<img src=${toDo.urgent ? 'images/urgent-active.svg' : 'images/urgent.svg'} class="card__img--urgent" alt="urgent lightning bolt">
+					<figcaption class="urgent__tag">Urgent</figcaption>
+				</div>
+				<div class="card__footer-deleteimg">
+					<img src="images/delete.svg" class="card__img--delete" alt="delete icon">
+					<p class="delete__tag">Delete</p>
+				</div>
 			</footer>
 		</article>`)
 
