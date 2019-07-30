@@ -12,9 +12,9 @@ var buttonContainer = document.querySelector('.nav__buttons');
 var toDos = []
 
 
-
 checkStorage();
 appendLists();
+insertWelcomePrompt();
 
 addTaskButton.addEventListener("click", createTask);
 navBar.addEventListener("click", deleteFromList);
@@ -80,28 +80,12 @@ function markTaskComplete(event) {
 	toDos[listIndex].tasks[taskIndex].complete === true ? checkImg.src = checked : checkImg.src = unchecked;
 	toDos[listIndex].tasks[taskIndex].complete === true ? checkImg.className = 'main--checkbox-complete' : checkImg.className = 'main--checkbox-empty';
 	toDos[listIndex].saveToStorage(toDos);
+	addCheckStyling(event);
 }
 
-// function updateUrgent(event) {
-// 	var index = getIndex(event);
-// 	var urgentImg = event.target;
-// 	var notUrgent = 'images/urgent.svg';
-// 	var urgent = 'images/urgent-active.svg';
-// 	toDos[index].urgent === false ? urgentImg.src = notUrgent : urgentImg.src = urgent
-// 	toDos[index].saveToStorage(toDos);
-// 	// toDos.updateToDo(toDos[index]);
-// }
-
-// function updateUrgent(event) {
-// 	var index = getIndex(event);
-// 	toDos.updateToDo(toDos[index]);
-// 	var urgentImg = event.target;
-// 	var notUrgent = 'images/urgent.svg';
-// 	var urgent = 'images/urgent-active.svg';
-// 	toDos[index].urgent === false ? urgentImg.src = notUrgent : urgentImg.src = urgent
-// 	toDos[index].saveToStorage(toDos);
-// }
-
+function addCheckStyling(event) {
+	event.target.closest('li').classList.add('check-styling')
+}
 function updateUrgent(event) {
 	var index = getIndex(event);
 	toDos[index].urgent = !toDos[index].urgent;
@@ -109,9 +93,19 @@ function updateUrgent(event) {
 	var notUrgent = 'images/urgent.svg';
 	var urgent = 'images/urgent-active.svg';
 	toDos[index].urgent === false ? urgentImg.src = notUrgent : urgentImg.src = urgent
+	addUrgentStyling(event);
 	toDos[index].saveToStorage(toDos);
 }
 
+function addUrgentStyling(event) {
+	var card = event.target.closest('.card');
+	var index = getIndex(event);
+	if (toDos[index].urgent === true) {
+		card.classList.add('urgent')
+	} else {
+		card.classList.remove('urgent');
+	}
+}
 
 function enableCreateList() {
 	var listAreaItem = document.querySelector('.nav__tasklist').firstChild;
@@ -218,8 +212,24 @@ function createList(taskObjs) {
 	taskInput.value = "";
 }
 
+function insertWelcomePrompt() {
+	if (mainDisplay.innerText === "" || mainDisplay.innerText === " ") {
+		console.log("hellooooo");
+		mainDisplay.insertAdjacentHTML("afterbegin", `<article class="card__prompt">
+				<p class="prompt__message">Get yourself organized! Start making your to-do list to the left!</p>
+			</article>`)
+	}
+}
+
+function removePrompt() {
+  var prompt = document.querySelector(".card__prompt");
+  if (prompt) {
+    prompt.parentNode.removeChild(prompt)
+  }
+}
+
 function generateToDoCard(toDo) {
-	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card masonry-item" data-id=${toDo.id}>
+	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card" data-id=${toDo.id}>
 				<header class="card__header">
 					<h3 class="card__title">${toDo.title}</h3>
 				</header>
@@ -243,5 +253,5 @@ function generateToDoCard(toDo) {
 				</div>
 			</footer>
 		</article>`)
-
+	removePrompt()
 }

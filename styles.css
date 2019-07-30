@@ -200,7 +200,7 @@ body {
 }
 
 .urgent {
-	background-color: yellow;
+	background-color: #FFE89D;
 }
 
 .card__header {
@@ -254,6 +254,11 @@ body {
 
 li {
 	list-style: none;
+}
+
+.checkstyling {
+	font-style: italic;
+	font-color: red;
 }
 
 .card__prompt {
