@@ -39,6 +39,7 @@ body {
     background-color: #1F1F3D;
     height: 80px;
     display: flex;
+    align-items: center;
     flex-direction: row;
     justify-content: space-between;
 
@@ -49,7 +50,8 @@ body {
     color: #FFFFFF;
     font-weight: bold;
     text-transform: uppercase;
-    margin: 10px 0;
+	margin: 10px 22px;
+	padding-top: 6px;
 }
 
 .header__span {
@@ -63,13 +65,12 @@ body {
 }
 
 .header__form {
-	float: right;
     height: 40px;
     width: 250px;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    margin: 16px 0;
+    margin: 16px 22px;
     background-color: white;
 }
 
@@ -126,7 +127,7 @@ body {
 	display: flex;
     flex-direction: column;
     height: 70px;
-    width: 84%;
+    width: 91%;
     align-items: center;
     margin: 10px auto;
 }
@@ -137,6 +138,7 @@ body {
     background-color: #1F1F3D;
     float: right;
     margin: 10px auto;
+    margin-right: 15px;
     display: inline-block;
     vertical-align: middle;
     align-items: right;
@@ -197,6 +199,10 @@ body {
 	width: 100%;
 }
 
+.urgent {
+	background-color: yellow;
+}
+
 .card__header {
 	border-bottom: 1px solid #C7D3D8;
 	color: #1F1F3D;
@@ -234,7 +240,11 @@ body {
 .card__img--delete,
 .card__img--urgent {
 	height: 25px;
-	width: 25px;
+    width: 25px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    margin-top: 5px;
 	
 }
 
@@ -246,9 +256,9 @@ li {
 	list-style: none;
 }
 
-.card__footer-urgentimg,
+/*.card__footer-urgentimg,
 .card__footer-deleteimg {
 	border: 1px solid red;
-}
+}*/
 
 
