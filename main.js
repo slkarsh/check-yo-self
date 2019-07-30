@@ -23,10 +23,8 @@ addTaskButton.addEventListener("click", createTask);
 navBar.addEventListener("click", deleteFromList);
 makeListButton.addEventListener("click", listHandler);
 buttonContainer.addEventListener("mouseover", enableCreateList)
-// taskInput.addEventListener("keyup", enableCreateList)
-// titleInput.addEventListener("keyup", enableCreateList)
 mainDisplay.addEventListener("click", cardHandler);
-// makeListButton.addEventListener("mouseover", enableCreateList)
+
 
 
 
@@ -81,6 +79,9 @@ function markTaskComplete(event) {
 	var listIndex = getIndex(event);
 	var taskIndex = findTaskIndex(event);
 	var card = toDos[listIndex]
+	console.log(card)
+	console.log(card.tasks)
+	console.log(taskIndex)
 	card.markComplete(card.tasks[taskIndex])
 	var checkImg = event.target;
 	var unchecked = 'images/checkbox.svg';
@@ -164,7 +165,7 @@ function createTaskArray() {
 		return task.innerText;
 	});
 	var taskObjs = taskText.map(function(task){
-		return {task: `${task}`, complete: false, id: Date.now()}
+		return {task: `${task.trim()}`, complete: false, id: Date.now()}
 	});
 	return taskObjs;
 }
