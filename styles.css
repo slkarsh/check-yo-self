@@ -256,6 +256,25 @@ li {
 	list-style: none;
 }
 
+.card__prompt {
+	display: inline-block;
+	background-color: #EAF7FF;
+	border: 5px solid #C7D3D8;
+	display: inline-block;
+	margin: 0.25rem;
+	padding: 1rem;
+	width: 100%;
+	height: 50vh;
+}
+
+.prompt__message {
+	color: #1F1F3D;
+	font-weight: bold;
+	text-align: center;
+	margin: auto;
+	font-size: 3rem;
+}
+
 /*.card__footer-urgentimg,
 .card__footer-deleteimg {
 	border: 1px solid red;
