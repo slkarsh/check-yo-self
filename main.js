@@ -9,6 +9,7 @@ var addTaskButton = document.querySelector('.task__add--button');
 var makeListButton = document.querySelector('.top__create--button');
 var clearButton = document.querySelector('.top__clear--button');
 var buttonContainer = document.querySelector('.nav__buttons');
+var urgentFilterButton = document.querySelector(".bottom__filter--button");
 var toDos = []
 
 
@@ -22,6 +23,7 @@ makeListButton.addEventListener("click", listHandler);
 buttonContainer.addEventListener("mouseover", enableCreateList)
 mainDisplay.addEventListener("click", cardHandler);
 searchInput.addEventListener("keyup", searchCardTitles);
+urgentFilterButton.addEventListener("click", filterByUrgent)
 
 
 function listHandler(event) {
@@ -32,8 +34,41 @@ function listHandler(event) {
 
 }
 
+// function filterByStarred(event) {
+//   var cardStars = document.querySelectorAll(".card__header")
+//   var card = document.querySelectorAll(".card")
+//   var unstarredCards = [];
+//   for (var i = 0; i < cardStars.length; i++) {
+//     if (!cardStars[i].innerHTML.includes("images/star-active.svg")) {
+//       unstarredCards.push(card[i]);
+//     }
+//   }
+//   unstarredCards.forEach(function (card) {
+//     card.remove();
+//   });
+//   navStarBtn.innerText = "Show All Ideas";
+// }
+
+
+function filterByUrgent(event) {
+	console.log("click")
+	var urgentCards = document.querySelectorAll(".card__footer-urgentimg")
+	console.log(urgentCards);
+	var card = document.querySelectorAll(".card")
+	var unmarkedCards = [];
+	for (var i = 0; i < urgentCards.length; i++) {
+		if (!urgentCards.innerHTML.includes("images/urgent-active.svg")) {
+			unmarkedCards.push(card[i])		
+		}
+	}
+	unmarkedCards.forEach(function(card) {
+		card.remove();
+	})
+	urgentFilterButton.innerText = "Show All To-Dos";
+}
+
 function cardHandler(event) {
-	if (event.target.classList[0] === 'main--checkbox-empty'){
+	if (event.target.classList[0] === 'main--checkbox-empty' || event.target.classList[0] === 'main--checkbox-complete'){
 		findTaskIndex(event);
 		markTaskComplete(event);
 	}
@@ -51,8 +86,16 @@ function findId(event) {
 	return toDoId;
 }
 
+function clearNav(event) {
+	var navTaskList = document.querySelector('.nav__tasklist')
+	if (titleInput.length !== 0 || navTaskList.innerText !== null ) {
+		deleteFromList();
+		titleInput = ""
+	}
+}
+
 function getIndex(event) {
-	var list = event.target.closest('.card');
+	var list = event.target.closest('.card') || event.target.closest('.urgent');
 	var listId = parseInt(list.dataset.id);
 	var listIndex = toDos.findIndex(function(toDo) {
 		return toDo.id === listId;
@@ -70,6 +113,7 @@ function findTaskIndex(event) {
 }
 
 function markTaskComplete(event) {
+	console.log("dkfhkdff,n")
 	var listIndex = getIndex(event);
 	var taskIndex = findTaskIndex(event);
 	var card = toDos[listIndex]
@@ -84,8 +128,15 @@ function markTaskComplete(event) {
 }
 
 function addCheckStyling(event) {
-	event.target.closest('li').classList.add('check-styling')
+	if (event.target.classList[0] === 'main--checkbox-complete'){
+	event.target.closest('.card__list-item').classList.add('check-styling');
+	}
+	else {
+		event.target.closest('.card__list-item').classList.remove('check-styling')
+	}
 }
+
+
 function updateUrgent(event) {
 	var index = getIndex(event);
 	toDos[index].urgent = !toDos[index].urgent;
@@ -102,7 +153,7 @@ function addUrgentStyling(event) {
 	var index = getIndex(event);
 	if (toDos[index].urgent === true) {
 		card.classList.add('urgent')
-	} else {
+	} else {		
 		card.classList.remove('urgent');
 	}
 }
@@ -214,7 +265,6 @@ function createList(taskObjs) {
 
 function insertWelcomePrompt() {
 	if (mainDisplay.innerText === "" || mainDisplay.innerText === " ") {
-		console.log("hellooooo");
 		mainDisplay.insertAdjacentHTML("afterbegin", `<article class="card__prompt">
 				<p class="prompt__message">Get yourself organized! Start making your to-do list to the left!</p>
 			</article>`)
@@ -229,7 +279,9 @@ function removePrompt() {
 }
 
 function generateToDoCard(toDo) {
-	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card" data-id=${toDo.id}>
+	var cardClass = toDo.urgent ? 'urgent' : null
+	console.log(cardClass)
+	mainDisplay.insertAdjacentHTML('afterbegin', `<article class="card ${cardClass}" data-id=${toDo.id}>
 				<header class="card__header">
 					<h3 class="card__title">${toDo.title}</h3>
 				</header>
