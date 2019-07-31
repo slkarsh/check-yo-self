@@ -18,7 +18,7 @@ Layout comps provided by Turing School:
 
 ![Desktop Layout](./Images/Comp-Desktop.png)
 ![Mobile Layout](./Images/Comp-Mpbile-Top.png)
-
+ 
 Results:
 ![Final desktop layout](./Images/Desktop-fullscreen.png)
 ![Mobile](./Images/Mobile Layout Top.png)
