@@ -17,11 +17,11 @@ Through the use of JavaScript, the application allows a certain level of customi
 Layout comps provided by Turing School:
 
 ![Desktop Layout](images/comp-layout.png)
-![Mobile Layout](./Images/Comp-Mpbile-Top.png)
+![Mobile Layout](images/comp-mobile.png)
  
 Results:
-![Final desktop layout](./Images/Desktop-fullscreen.png)
-![Mobile](./Images/Mobile Layout Top.png)
-![With Updates to Lists](./Images/Desktop-fullscreen with checks and urgents.png)
+![Final desktop layout](images/desktop-fullscrn.png)
+![Mobile](images/mobile-top.png)
+![With Updates to Lists](images/desktop-fullscrn-withupdates.png)
 
 
