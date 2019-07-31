@@ -11,15 +11,9 @@ body {
 
 .main__content {
     background-color: #F3F6F7;
-    /* column-count: 2; */
-    /* column-width: 20em; */
     display: flex;
-    /* flex-direction: column; */
-    /* flex-wrap: wrap; */
-    /* height: 100vh; */
     margin-top: 0;
     width: 100%;
-
 }
 
 .main__section {
@@ -268,14 +262,14 @@ li {
 }
 
 .card__prompt {
-	background-color: #EAF7FF;
-	border: 5px solid #C7D3D8;
-	display: inline-block;
-	display: inline-block;
-	height: 50vh;
-	margin: 0.25rem;
-	padding: 1rem;
-	width: 100%;
+    background-color: #EAF7FF;
+    border: 5px solid #C7D3D8;
+    display: inline-block;
+    display: inline-block;
+    height: 41vh;
+    margin: 0.25rem;
+    padding: 1rem;
+    width: 200%;
 }
 
 .prompt__message {
@@ -304,7 +298,7 @@ li {
 }
 
 
-@media only screen and (max-width: 730px)  {
+@media only screen and (max-width: 1000px)  {
 
 .header {
     height: 82px;
@@ -330,15 +324,13 @@ li {
 }
 
 .main__content {
-    background-color: #F3F6F7;
-    height: 104vh;
     margin-top: -20px;
     width: 100%;
 }
 
 .nav{
     background-color: #587A8A;
-    height: 100vh;
+    height: 1000px;
     width: 30%;
     margin-top: 97px;
 }
@@ -381,6 +373,10 @@ li {
 
 .main__section {
     margin-top: 100px;
+    column-count: 2;
+    height: 100%;
+    max-width: 68%;
+    margin-left: 0px;
 }
 .card {
     margin: 0.5rem;
@@ -414,3 +410,65 @@ li {
 
 }
 
+/*//media query iphone 5*/
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px){
+
+.header {
+	display: block;
+	height: 90px;
+	width: 100%;
+	position: fixed;
+	margin-top: -68px;
+}
+
+.header__title {
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.header__form {
+	height: 25px;
+	text-align: center;
+	align-content: center;
+	margin: 0 auto;
+}
+
+.header__form--searchimg {
+	width: 40px;
+	height: 25px;
+}
+
+.header__search--input {
+	height: 25px;
+	width: 125px;
+
+}
+
+.main__content {
+	display: block;
+	margin-top: 34px;
+	height: 100%;
+}
+
+.nav {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin-top: 66px;
+	height: 100vh;
+}
+
+.main__section {
+	margin-top: 0px;
+	display: flex;
+	flex-direction: column;
+	max-width: 95%;
+}
+
+.card {
+	width: 100%;
+}
+
+}
