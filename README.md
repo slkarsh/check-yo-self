@@ -1,4 +1,4 @@
-# check-yo-self
+# Check Yo' Self
 
 Check Yo'Self is a basic task management application designed for a user to replace all the sticky notes they have lying around with a dynamic desktop application. This was my final project for Module 1 at Turing School of Software and Design.
 
