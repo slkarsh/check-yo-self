@@ -16,7 +16,7 @@ Through the use of JavaScript, the application allows a certain level of customi
 
 Layout comps provided by Turing School:
 
-![Desktop Layout](./Images/Comp-Desktop.png)
+![Desktop Layout](images/Comp Desktop.png)
 ![Mobile Layout](./Images/Comp-Mpbile-Top.png)
  
 Results:
